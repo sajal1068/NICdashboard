@@ -41,7 +41,7 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-100 border-b border-gray-200">
+    <nav className="bg-gray-100 border-b border-blue-200">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
         <div className="text-xl font-bold">MyLogo</div>
 

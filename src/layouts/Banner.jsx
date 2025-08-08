@@ -2,7 +2,7 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
-const banner = () => {
+const Banner = () => {
   return (
     <>
       <Swiper
@@ -26,4 +26,4 @@ const banner = () => {
   );
 }
 
-export default banner;
+export default Banner;
