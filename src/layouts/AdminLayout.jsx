@@ -1,26 +1,58 @@
-import React, { useState } from 'react';
-import Sidebar from './Sidebar';
+// src/layouts/AdminLayout.jsx
+import React, { useState, useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
+import Sidebar from './Sidebar';
 import AdminFooter from './AdminFooter';
 
-const AdminLayout = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+const AdminLayout = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      
+      // On mobile, close sidebar by default
+      if (mobile) {
+        setSidebarOpen(false);
+      }
+    };
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
+    // Check initial screen size
+    checkMobile();
+    
+    // Add event listener for resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Toggle function
+  const handleToggle = () => {
+    setSidebarOpen(prev => !prev);
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {isSidebarOpen && (
-        <div onClick={toggleSidebar} className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"></div>
-      )}
-      <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'md:ml-64' : 'md:ml-0'}`}>
-        <AdminNavbar toggleSidebar={toggleSidebar} />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto p-6">
-          {children}
+    <div className="flex h-screen bg-gray-100">
+      <Sidebar 
+        sidebarOpen={sidebarOpen}
+        isMobile={isMobile}
+      />
+      
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <AdminNavbar 
+          onToggle={handleToggle}
+          isMobile={isMobile}
+          sidebarOpen={sidebarOpen}
+        />
+        
+        <main className="flex-1 overflow-y-auto p-4 md:p-6">
+          <Outlet />
         </main>
+        
         <AdminFooter />
       </div>
     </div>

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Frontend from "./layouts/FrontendLayout.jsx";
+import Frontend from "./layouts/FrontendLayout";
 import Home from "./pages/Home";
-import Login from "./pages/Auth/Login.jsx"
-import BackToTopButton from './layouts/BackToTopButton.jsx';
+import Login from "./pages/Auth/Login"
+import BackToTopButton from './layouts/BackToTopButton';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard.jsx";
-import AdminLayout from "./layouts/AdminLayout.jsx";
+import Dashboard from "./pages/Dashboard";
+import AdminLayout from "./layouts/AdminLayout";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,12 +21,31 @@ function App() {
           <Route path="/login" element={<Login />} />        
 
           <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Dashboard />} />            
+            <Route index element={<Dashboard />} /> 
+                   
           </Route> 
 
         </Routes>
         <BackToTopButton />
       </BrowserRouter>
+
+      {/* <Routes>
+        
+        <Route path="/" element={<FrontendLayout />}>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+        </Route>
+        
+      
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+        
+        
+        <Route path="*" element={<div className="p-8 text-center">Page not found</div>} />
+      </Routes>
+      <BackToTopButton /> */}
     
     </>
   );
