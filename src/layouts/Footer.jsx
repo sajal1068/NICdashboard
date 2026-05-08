@@ -1,95 +1,85 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation ,Trans } from "react-i18next"; 
 
-const footer = () => {
+
+const Footer = () => {
   const currentDate = new Date();
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = currentDate.toLocaleDateString(undefined, options);
+  const { t, i18n } = useTranslation();  
+
+  const footerLogos = [
+    { src: "images/NIC.svg", alt: "National Informatics Centre" },
+    { src: "images/Digital.svg", alt: "Digital India" },
+    { src: "images/ticket-raise.svg", alt: "Support Desk" },
+  ];
+
   return (
-    <>
-      <section className="bg-[#111111] py-[42px]">
-        <div className="container mx-auto">
-          <div className="w-full flex flex-col md:flex-row pb-5">
-            <div className="w-full md:w-1/3">
-              <h2 className="text-white text-[1.25rem] font-semibold leading-6 capitalize relative mt-[10px] mb-[35px]">
-                Contact Us
-                <span className="absolute bottom-[-13px] left-0 w-[50px] h-1 bg-[#FFAA73]"></span>
-              </h2>
-
-              <span className="text-white font-medium block">
-                Ministry of Health & Family Welfare,
-              </span>
-              <span className="text-white font-light block font-14">
-                Nirman Bhawan, Near Udyog Bhawan Metro Station,
-                <span className="block"></span>
-                Maulana Azad Rd, New Delhi, Delhi 110011
-              </span>
-            </div>
-
-            <div className="w-full md:w-2/3">
-              <h2 className="text-white text-[1.25rem] font-semibold leading-6 capitalize relative mt-[10px] mb-[35px]">
-                Quick Link
-                <span className="absolute bottom-[-13px] left-0 w-[50px] h-1 bg-[#FFAA73]"></span>
-              </h2>
-
-              <div className="w-full flex ">
-                <div className="w-1/3">
-                  <ul className="footer-links">
-                    <li>
-                      <Link to="#" className="text-white">
-                        About Us
-                      </Link>
-                    </li>
-                    {/* <li><Link to="/disclaimer" onClick={() => setIsOpen(false)}>Disclaimer</Link></li> */}
-                  </ul>
-                </div>
-
-                <div className="w-1/3">
-                  <ul className="footer-links">
-                    <li>
-                      <Link to="#" className="text-white">
-                        Copyright Policy
-                      </Link>
-                    </li>
-                    {/* <li><Link to="/hyperlinking" onClick={() => setIsOpen(false)}>Hyper Linking Policy</Link></li> */}
-                  </ul>
-                </div>
-                <div className="w-1/3">
-                  <ul className="footer-links">
-                    <li>
-                      <Link to="#" >
-                        Hyper Linking Policy
-                      </Link>
-                    </li>
-                    {/* <li><Link to="/terms" onClick={() => setIsOpen(false)}>Terms & Conditions</Link></li> */}
-                    {/* <li><Link to="/feedback" onClick={() => setIsOpen(false)}>Feedback</Link></li> */}
-                  </ul>
-                </div>
-              </div>
-            </div>
+    <footer>        
+      {/* <section className="bg-[#0B1B34] py-8"> */}
+      <section className="bg-slate-900 py-8">
+        <div className="container mx-auto px-4">          
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 mb-10">
+            {footerLogos.map((logo, index) => (
+              <img 
+                key={index}
+                src={logo.src} 
+                alt={logo.alt} 
+                className="h-12 md:h-16 w-auto opacity-80 hover:opacity-100 transition-opacity"
+              />
+            ))}
+          </div>
+          
+          <div className="border-y border-white/10 py-4">
+            <ul className="flex flex-wrap justify-center items-center text-xs md:text-sm tracking-[2px] md:tracking-[3.2px] uppercase">
+              <li className="px-4 border-r border-white/10">
+                <Link to="/privacy-policy" className="text-stone-400 hover:text-white transition-colors">{t("privacy_policy")}</Link>
+              </li>
+              <li className="px-4 border-r border-white/10">
+                <Link to="/sitemap" className="text-stone-400 hover:text-white transition-colors">{t("sitemap")}</Link>
+              </li>
+              <li className="px-4">
+                <Link to="/contact" className="text-stone-400 hover:text-white transition-colors">{t("contact")}</Link>
+              </li>
+            </ul>
           </div>
         </div>
-
-        <div className="container mx-auto text-center py-4 font-14 font-light designedBy mt-2 border-y border-solid border-[#3c3b3b]">
-          <p className="text-white">
-            This site is owned by the National Health Mission (NHM),{" "}
-            <Link to="#" className="linkLine">
-              <span className="text-[#FFAA73]">
-                Ministry of Health and Family Welfare, Government of India.
-              </span>
-            </Link>
-            © {currentDate.getFullYear()}{" "}
+        
+      </section>
+     
+      <section className="bg-[#081223] py-6">      
+        <div className="container mx-auto px-4 text-center space-y-4">
+          <p className="text-stone-500 text-xs md:text-sm mx-auto leading-relaxed">
+           {t("website_contents")}
+            <div></div>
+            <Trans
+              i18nKey="footer.credit"
+              components={[
+                <br key="0" />, 
+                <a 
+                  key="1"
+                  href="https://www.nic.gov.in/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-red-800 hover:underline font-medium"
+                />
+              ]}
+            />
+           
           </p>
-        </div>
-
-        <div className="container mx-auto text-center pt-5">
-          <span className="text-white font-medium">
-            Last Updated: {formattedDate}{" "}
-          </span>
+          
+          <div className="text-stone-400 text-xs font-medium pt-2 border-t border-white/5 inline-block">
+            Last Updated : <span className="text-stone-300">{formattedDate}</span>
+          </div>
         </div>
       </section>
-    </>
-  );
-}
 
-export default footer;
+      
+    </footer>
+
+    
+  );
+};
+
+export default Footer;
